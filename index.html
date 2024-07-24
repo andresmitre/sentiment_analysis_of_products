@@ -71,6 +71,11 @@
         .error {
             color: red;
         }
+        .delay-message {
+            color: #007bff;
+            font-size: 14px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -83,15 +88,21 @@
             <button id="clear-button" class="clear-button">Clear output</button>
         </div>
         <div id="result"></div>
+        <div id="delay-message" class="delay-message"></div>
     </div>
 
     <script>
         document.getElementById('analyze-button').addEventListener('click', async function() {
             var userInput = document.getElementById('text-input').value;
             var resultDiv = document.getElementById('result');
+            var delayMessageDiv = document.getElementById('delay-message');
             
             resultDiv.innerHTML = ''; // Clear previous results
+            delayMessageDiv.innerText = 'Processing request. Please wait...'; // Show delay message
             
+            // Simulate a 5-second delay
+            await new Promise(resolve => setTimeout(resolve, 5000));
+
             try {
                 const response = await fetch('https://nlp-app-python.azurewebsites.net/api/HttpTrigger123', {
                     method: 'POST',
@@ -109,12 +120,15 @@
                 }
             } catch (error) {
                 resultDiv.innerHTML = '<span class="error">Error: ' + error.message + '</span>';
+            } finally {
+                delayMessageDiv.innerText = ''; // Clear delay message after processing
             }
         });
 
         document.getElementById('clear-button').addEventListener('click', function() {
             document.getElementById('text-input').value = '';
             document.getElementById('result').innerHTML = '';
+            document.getElementById('delay-message').innerText = ''; // Clear delay message
         });
     </script>
 </body>
