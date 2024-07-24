@@ -49,9 +49,16 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            margin: 5px;
         }
         button:hover {
             background-color: #0056b3;
+        }
+        .clear-button {
+            background-color: #dc3545;
+        }
+        .clear-button:hover {
+            background-color: #c82333;
         }
         #result {
             margin-top: 20px;
@@ -71,7 +78,10 @@
         <h2>Sentiment Analysis</h2>
         <p>Enter any text in the box below to analyze its sentiment. The analysis will determine whether the text is positive, negative, or neutral, and how subjective or objective it is. Keywords from the text will also be extracted.</p>
         <textarea id="text-input" placeholder="Write something here..."></textarea>
-        <button id="analyze-button">Analyze Sentiment</button>
+        <div>
+            <button id="analyze-button">Analyze Sentiment</button>
+            <button id="clear-button" class="clear-button">Clear output</button>
+        </div>
         <div id="result"></div>
     </div>
 
@@ -100,6 +110,11 @@
             } catch (error) {
                 resultDiv.innerHTML = '<span class="error">Error: ' + error.message + '</span>';
             }
+        });
+
+        document.getElementById('clear-button').addEventListener('click', function() {
+            document.getElementById('text-input').value = '';
+            document.getElementById('result').innerHTML = '';
         });
     </script>
 </body>
